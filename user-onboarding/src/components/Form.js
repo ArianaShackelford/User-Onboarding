@@ -49,7 +49,7 @@ const superUserForm = withFormik({
         password: Yup.string().required('Password is required!').min(8, 'Password must be 8 characters or longer'),
         terms: Yup.boolean().required('Must agree to Terms of Service!')
     }),
-    handleSubmit(values, {resetForm, setErrors, setSubmitting}) {
+    handleSubmit(values, {resetForm, setErrors, setSubmitting, setStatus}) {
         if(values.email === 'alreadytaken@atb.dev') {
             setErrors({email: 'That email is already taken'});
         }else{
@@ -58,6 +58,7 @@ const superUserForm = withFormik({
             console.log(response);
             resetForm();
             setSubmitting(false);
+            setStatus(response.data);
         })
         .catch(error => console.log(error));
         setSubmitting(false);
